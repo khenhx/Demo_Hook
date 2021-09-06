@@ -1,3 +1,5 @@
+## Demo_hook_php <=> Demo_hook_module (Liên Kết với nhau).
+## Demo_hook_php 
 ```php
 <?php
 
@@ -7,6 +9,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
 
 class HookTextFormService {
+
+ ## S1: Demo hook form sử dụng [submit]
   public function formAlter(&$form, $form_id) {
     if ($form_id === "node_product_form") {
       $form['create_save'] = [
@@ -28,6 +32,7 @@ class HookTextFormService {
     }
   }
 
+## S2: Demo hook sử dụng node insert
   public function hookFormEntityInsert(EntityInterface $entity) {
     if ($entity->bundle() === 'product' && $entity->get('field_tao_taxonomy')->value === 1) {
       $entity->label();
@@ -48,6 +53,8 @@ class HookTextFormService {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
+   
+   ## S3: Demo hook dùng để xóa, sử dụng node delete
   public function deleteTaxonomy(EntityInterface $entity) {
     if ($entity->bundle() === 'product') {
       $name = $entity->label();
