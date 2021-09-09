@@ -122,5 +122,50 @@ class TuDienRepository {
     }
     return $count ?? 0;
   }
+    /**
+   * Update an entry in the database.
+   *
+   * @param $id
+   * @return int
+   *   The number of updated rows.
+   */
+  public function delete($id) {
+    try {
+      $count = $this->connection->delete('a_tu_dien')
+        ->condition('id', $id)
+        ->execute();
+    }
+    catch (\Exception $e) {
+      $this->messenger()->addMessage($this->t('Delete failed. Message = %message, query= %query', [
+          '%message' => $e->getMessage(),
+          '%query' => $e->query_string,
+        ]
+      ), 'error');
+    }
+    return $count ?? 0;
+  }
+
+  /**
+   * Update an entry in the database.
+   *
+   * @param $id
+   * @return int
+   *   The number of updated rows.
+   */
+  public function deleteType(array $entry) {
+    try {
+      $count = $this->connection->delete('a_tu_dien')
+        ->condition('type', $entry['type'])
+        ->execute();
+    }
+    catch (\Exception $e) {
+      $this->messenger()->addMessage($this->t('Update failed. Message = %message, query= %query', [
+          '%message' => $e->getMessage(),
+          '%query' => $e->query_string,
+        ]
+      ), 'error');
+    }
+    return $count ?? 0;
+  }
 }
 ```
