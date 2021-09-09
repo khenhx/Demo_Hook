@@ -31,5 +31,21 @@ tu_dien.update:
     _form: '\Drupal\tu_dien\Form\TuDienUpdateForm'
   requirements:
     _permission: 'access content'
+    
+tu_dien.delete:
+  path: '/tu-dien/delete'
+  defaults:
+    _title: 'Delete từ điển'
+    _form: '\Drupal\tu_dien\Form\TuDienDeleteForm'
+  requirements:
+    _permission: 'access content'
+
+tu_dien.delete_type:
+  path: '/tu-dien/delete-type'
+  defaults:
+    _title: 'Delete Type từ điển'
+    _form: '\Drupal\tu_dien\Form\TuDienDeleteTypeForm'
+  requirements:
+    _permission: 'access content' 
 ```
     
