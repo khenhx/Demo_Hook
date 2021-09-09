@@ -1,5 +1,5 @@
 ## file routing.yml
-```php
+```yml
 tu_dien.import:
   path: '/import-tu-dien'
   defaults:
@@ -46,6 +46,5 @@ tu_dien.delete_type:
     _title: 'Delete Type từ điển'
     _form: '\Drupal\tu_dien\Form\TuDienDeleteTypeForm'
   requirements:
-    _permission: 'access content' 
+    _permission: 'access content'
 ```
-    
