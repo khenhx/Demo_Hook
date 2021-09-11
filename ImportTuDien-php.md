@@ -132,17 +132,54 @@ class ImportTuDien extends FormBase {
       ->execute()
       ->fetchAll();
 
-    dump($getNull);
-    die;
 
-//    $csv_file = $form_state->getValue('csv_file');
-//    $file = File::load($csv_file[0]);
-//    $data = $this->csvtoarray($file->getFileUri(), ',');
-//    $connection = \Drupal::database();
-//    foreach ($data as $row) {
-//      $connection->insert('a_tu_dien')->fields($row)->execute();
-//    }
-//    $file->delete();
+    $recordBeThuaAABB = $connection->select('a_tu_dien', 't')
+      ->fields('t', ['id', 'vietnam', 'type'])
+      ->condition('id', [100, 123], 'BETWEEN')
+      ->orderBy('id',  'DESC')
+      ->range(0, 10)
+      ->execute()
+      ->fetchAll();
+
+    $tinhTu = $connection->select('a_tu_dien', 't')
+      ->fields('t', ['id', 'vietnam', 'type'])
+      ->condition('type', 'adj')
+      ->execute()
+      ->fetchAll();
+
+
+    $nh = $connection->select('a_tu_dien', 't')
+      ->fields('t', ['vietnam', 'type'])
+      ->condition('vietnam', "%nh%", 'LIKE')
+      ->execute()
+      ->fetchAll();
+
+
+    $query = $connection->select('a_tu_dien', 't')
+      ->fields('t', ['id', 'vietnam', 'type']);
+
+    $orGroup = $query->orConditionGroup()
+      ->condition('type', 'adj')
+      ->condition('id', [100, 105], 'BETWEEN')
+      ->condition('vietnam', "%nh%", 'LIKE');
+
+    $query->condition($orGroup);
+    $dataOrr = $query->execute()->fetchAll();
+
+
+    $query = $connection->select('a_tu_dien', 't')
+      ->fields('t', ['id', 'vietnam', 'type', 'english']);
+    $ofGroup = $query->orConditionGroup()
+      ->condition('type', 'adv')
+      ->condition('id', [103, 121], 'NOT BETWEEN')
+      ->condition('english', '%ro%', 'LIKE')
+      ->condition('vietnam', "%ro%", 'LIKE');
+
+    $query->condition($ofGroup);
+    $dataof = $query->execute()->fetchAll();
+
+    dump($dataof);
+    die;
   }
 
   public function csvtoarray($filename = '', $delimiter) {
